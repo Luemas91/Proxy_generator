@@ -29,7 +29,7 @@ card_counts = []
 # Initial Scryfall query to get the image url data
 for card in tqdm(card_list[columns].values):
     cards.append(scrython.Named(exact=card[0][2:])) # trims the numbers from MTG gold fish, shouldn't be a problem with csvs, breaks with more than 1 integer
-    card_counts.append*card[0][0:2]
+    card_counts.append(card[0][0:2])
     time.sleep(0.1)
     image_urls.append(cards[-1].image_uris()['normal'])
 
