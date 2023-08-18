@@ -31,7 +31,7 @@ for card in tqdm(card_list[columns].values):
     cards.append(scrython.Named(exact=card[0][2:])) # trims the numbers from MTG gold fish, shouldn't be a problem with csvs, breaks with more than 1 integer
     card_counts.append(card[0][0:2])
     time.sleep(0.1)
-    image_urls.append(cards[-1].image_uris()['normal'])
+    image_urls.append(cards[-1].image_uris()['large'])
 
 # Second scryfall query to get the images
 images = []
@@ -61,7 +61,7 @@ y_start = A4[1] - 0.5 * inch - cell_height  # Start from the top of the page
 
 row_number = int(len(images) / 3) +1
 
-for row in range(row_number):
+for row in tqdm(range(row_number)):
     for col in range(3):
         image_index = row * 3 + col
         if image_index < len(images):
@@ -71,7 +71,7 @@ for row in range(row_number):
             # Draw a border around the image cell
             c.rect(x_start + col * cell_width, y_start - (row % 3) * cell_height, cell_width, cell_height)
     
-    if row % 3 == 0:
+    if row % 3 == 0 and row > 0:
         c.showPage()
         x_start = 0.5 * inch
         y_start = A4[1] - 0.5 * inch - cell_height
