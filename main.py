@@ -24,7 +24,7 @@ class CardInfo:
     image_url: str = "Unknown"
     image: PILImage = "Unknown"
 
-file_path = 'Deck - Rock the Dinosore.txt' # input path
+file_path = 'Deck - Pandafell down.txt' # input path
 output_path = f"{file_path[0:len(file_path)-4]}.pdf"
 columns = ['Magic Card']
 card_list = pd.read_csv(file_path, delimiter='\t', names=columns)
@@ -76,16 +76,16 @@ y_start = A4[1] - 0.5 * inch - cell_height  # Start from the top of the page
 
 card_sum = sum([i.card_count for i in cards])
 # render_images = [card.image * card.card_count for card in cards]
-render_images = [card.image for i in range(card.card_count) for card in cards]
+render_images = [card.image for card in cards for i in range(card.card_count)]
+print(len(render_images))
 render_count = [card.card_count for card in cards]
 row_number = int(card_sum / 3) +1
 
-for row in range(row_number):
+for row in tqdm(range(row_number)):
     for col in range(3):
         image_index = row * 3 + col
         if image_index < len(render_images):
             image_path = render_images[image_index]
-
             c.drawInlineImage(image_path, x_start + col * cell_width, y_start - (row % 3 ) * cell_height, 
                               width=cell_width, height=cell_height)
 
