@@ -39,7 +39,7 @@ card_counts = []
 for card in tqdm(card_list[columns].values):
     space_index = card[0].index(" ")
     cards.append(CardInfo(
-        card_count=card[0][0:space_index],
+        card_count=int(card[0][0:space_index]),
         card_name=card[0][space_index+1:],
         card=scrython.Named(exact=card[0][space_index+1:])
     ))    
@@ -78,7 +78,8 @@ y_start = A4[1] - 0.5 * inch - cell_height  # Start from the top of the page
 # Loop through image paths and add images to the grid
 
 card_sum = sum([i.card_count for i in cards])
-render_images = [card.image * card.card_count for card in cards]
+# render_images = [card.image * card.card_count for card in cards]
+render_images = [card.image for i in range(card.card_count) for card in cards]
 row_number = int(card_sum / 3) +1
 
 for row in tqdm(range(row_number)):
